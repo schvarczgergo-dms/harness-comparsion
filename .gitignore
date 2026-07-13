@@ -1,2 +1,19 @@
 # Editor / local tooling
 .cursor/
+
+# Node
+node_modules/
+dist/
+
+# Env
+.env
+
+# Logs
+*.log
+npm-debug.log*
+
+# Superpowers SDD scratch (carried over from the other harness branch)
+.superpowers/
+
+# BMAD personal config (installer marks this as gitignored)
+_bmad/custom/config.user.toml
