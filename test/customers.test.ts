@@ -21,12 +21,32 @@ describe("buildByDistanceList", () => {
     expect(result[1].name).toBe("Bela Budapest");
   });
   it("orders known distances ascending", () => {
-    const known = result.map((c) => c.distanceKm).filter((d): d is number => d !== null);
-    expect(known).toEqual([...known].sort((a, b) => a - b));
+    const knownNames = result
+      .filter((c) => c.distanceKm !== null)
+      .map((c) => c.name);
+    expect(knownNames).toEqual(["Anna Budapest", "Bela Budapest", "Vienna Guy"]);
   });
   it("places unknown-coordinate customers last with distanceKm null, sorted by name", () => {
     const lastTwo = result.slice(-2);
     expect(lastTwo.map((c) => c.distanceKm)).toEqual([null, null]);
     expect(lastTwo.map((c) => c.name)).toEqual(["Unknown One", "Unknown Two"]);
+  });
+  it("sorts an all-null-coordinate list by name with distanceKm null", () => {
+    const nullRows: CustomerRow[] = [
+      { id: 10, name: "Zoe Nowhere", telepules: "Atlantis", country_code: "XX", budget: 0, lat: null, lon: null },
+      { id: 11, name: "Amy Nowhere", telepules: "Nowhere", country_code: "XX", budget: 0, lat: null, lon: null },
+    ];
+    const out = buildByDistanceList(nullRows);
+    expect(out.map((c) => c.name)).toEqual(["Amy Nowhere", "Zoe Nowhere"]);
+    expect(out.map((c) => c.distanceKm)).toEqual([null, null]);
+  });
+  it("handles a single-element list", () => {
+    const single: CustomerRow[] = [
+      { id: 20, name: "Solo Budapest", telepules: "Budapest", country_code: "HU", budget: 500, lat: 47.4979, lon: 19.0402 },
+    ];
+    const out = buildByDistanceList(single);
+    expect(out).toHaveLength(1);
+    expect(out[0].name).toBe("Solo Budapest");
+    expect(out[0].distanceKm).toBe(0);
   });
 });

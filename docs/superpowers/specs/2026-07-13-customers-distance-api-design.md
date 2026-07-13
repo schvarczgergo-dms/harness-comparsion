@@ -127,8 +127,9 @@ Bucharest, Dublin, Copenhagen.
 - `.env.example` mirrors the Compose defaults; `DATABASE_URL` default
   `postgres://app:app@localhost:5433/customers`.
 - `seed-customers.json` copied into the repo.
-- **Postgres MCP**: a config entry in `.cursor/mcp.json` pointing at the Compose
-  DB; the user enables it in Cursor.
+- **Postgres MCP**: a project-scoped `.mcp.json` at the repo root, consumed by a
+  Claude app, running `@modelcontextprotocol/server-postgres` via `npx` against
+  the Compose DB (`postgres://app:app@localhost:5433/customers`).
 - README documents: Postgres start, migration, seed, server, tests.
 
 ## Out of Scope (YAGNI)

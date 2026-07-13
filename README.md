@@ -61,7 +61,14 @@ Stop the database with `npm run db:down`.
 - `GET /customers/by-distance` → array of customers sorted by ascending
   distance from Budapest. Budapest customers first (`distanceKm: 0`), unknown
   coordinates last (`distanceKm: null`), ties broken by name. `distanceKm` is
-  rounded to 1 decimal.
+  rounded to 1 decimal. Each element has `id`, `name`, `telepules`,
+  `countryCode`, `budget`, `distanceKm`:
+
+```json
+[
+  { "id": 1, "name": "Anna Kovács", "telepules": "Budapest", "countryCode": "HU", "budget": 850, "distanceKm": 0 }
+]
+```
 
 Example:
 
