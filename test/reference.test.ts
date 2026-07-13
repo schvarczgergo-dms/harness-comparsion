@@ -26,6 +26,11 @@ describe("lookupCoord", () => {
     expect(lookupCoord("Budapest XI. kerület")).toEqual(bp);
     expect(lookupCoord("1094 Budapest")).toEqual(bp);
   });
+  it("does not match inherited Object.prototype keys", () => {
+    expect(lookupCoord("toString")).toBeNull();
+    expect(lookupCoord("constructor")).toBeNull();
+    expect(lookupCoord("valueOf")).toBeNull();
+  });
   it("returns null for unknown or empty cities", () => {
     expect(lookupCoord("Atlantis")).toBeNull();
     expect(lookupCoord("")).toBeNull();

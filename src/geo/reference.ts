@@ -32,7 +32,7 @@ export function lookupCoord(city: string | null | undefined): Coord | null {
     return null;
   }
   const key = normalizeCity(city);
-  if (key in CITY_COORDS) {
+  if (Object.hasOwn(CITY_COORDS, key)) {
     return CITY_COORDS[key];
   }
   if (key.includes("budapest")) {
