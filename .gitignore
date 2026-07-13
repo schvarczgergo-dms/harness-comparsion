@@ -1,2 +1,16 @@
 # Editor / local tooling
 .cursor/
+
+# Node
+node_modules/
+dist/
+
+# Env
+.env
+
+# Logs
+*.log
+npm-debug.log*
+
+# Superpowers SDD scratch (briefs, reports, diffs, ledger)
+.superpowers/
