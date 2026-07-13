@@ -3,7 +3,7 @@ baseline_commit: 5a4d8c0
 ---
 # Story 1.1: Compute distance from Budapest
 
-Status: review
+Status: done
 
 ## Story
 
@@ -66,3 +66,15 @@ Amelia (Senior Software Engineer) — Opus 4.8 (Cursor)
 ### Change Log
 
 - 2026-07-13: Scaffolded toolchain; implemented and unit-tested distance domain (8 tests). Status → review.
+- 2026-07-13: Code review APPROVED. Status → done.
+
+## Senior Developer Review (AI)
+
+- **Reviewer:** Amelia (independent pass) — **Outcome: Approve**
+- **Date:** 2026-07-13
+- ACs 1-4 satisfied: toolchain runs (`npm test`), all four exported symbols present,
+  Vienna 213.x km within band, self-distance 0, null/partial coords → null.
+- Architecture adherence: module is pure/IO-free (AD-1/AD-2); single Budapest const
+  (AD-7); rounding in domain (AD-5). No `pg`/express/`fs` imports. Good.
+- `Math.min(1, sqrt(h))` guards against domain error at antipode — nice defensive touch.
+- No action items (High/Med/Low = 0/0/0).
