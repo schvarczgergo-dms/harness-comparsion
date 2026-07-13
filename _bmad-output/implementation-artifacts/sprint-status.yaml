@@ -35,7 +35,7 @@ development_status:
   1-1-compute-distance-from-budapest: done
   1-2-resolve-customer-cities-to-coordinates-offline: done
   1-3-order-customers-by-distance: done
-  1-4-persist-and-idempotently-seed-customers: backlog
+  1-4-persist-and-idempotently-seed-customers: done
   1-5-expose-count-and-by-distance-endpoints: backlog
   1-6-document-run-steps-and-wire-postgres-mcp: backlog
   epic-1-retrospective: optional
