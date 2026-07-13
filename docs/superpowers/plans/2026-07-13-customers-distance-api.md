@@ -153,6 +153,9 @@ dist/
 # Logs
 *.log
 npm-debug.log*
+
+# Superpowers SDD scratch (briefs, reports, diffs, ledger)
+.superpowers/
 ```
 
 - [ ] **Step 7: Copy the seed file into the repo**
@@ -841,29 +844,35 @@ git commit -m "feat(api): express app with count and by-distance endpoints"
 ### Task 9: Postgres MCP config, README & final verification
 
 **Files:**
-- Create/Modify: `.cursor/mcp.json` (add a `postgres` server; keep existing `markitdown`)
+- Create: `.mcp.json` (Claude Code project-scoped MCP config at repo root — committable)
 - Modify: `README.md`
 
 **Interfaces:**
-- Produces: a Postgres MCP config entry pointing at the Compose DB; README run instructions.
+- Produces: a Postgres MCP config entry (for a Claude app) pointing at the Compose DB; README run instructions.
 
-- [ ] **Step 1: Add Postgres MCP config** — merge into `.cursor/mcp.json`
+**Decision:** The Postgres MCP is consumed by a Claude application (not Cursor).
+Claude Code reads a project-scoped `.mcp.json` at the repo root, which is NOT
+gitignored (unlike `.cursor/`), so it is committed with the repo.
+
+- [ ] **Step 1: Create `.mcp.json`** at the repo root
 
 ```json
 {
   "mcpServers": {
     "postgres": {
-      "command": "docker",
+      "command": "npx",
       "args": [
-        "run", "--rm", "-i", "--network", "host",
-        "mcp/postgres",
+        "-y",
+        "@modelcontextprotocol/server-postgres",
         "postgres://app:app@localhost:5433/customers"
       ]
     }
   }
 }
 ```
-(Keep any existing `markitdown` entry alongside `postgres`.)
+The `@modelcontextprotocol/server-postgres` server exposes read-only schema and
+query access, matching the goal of inspecting the schema and data during
+development. It runs via `npx` (no Docker image needed).
 
 - [ ] **Step 2: Update `README.md`** with concrete run instructions
 
@@ -876,10 +885,9 @@ Run: `npm test` (all green), `npx tsc --noEmit` (exit 0), and the endpoint check
 - [ ] **Step 4: Commit**
 
 ```bash
-git add .cursor/mcp.json README.md
-git commit -m "docs: Postgres MCP config and run instructions"
+git add .mcp.json README.md
+git commit -m "docs: Postgres MCP config (Claude) and run instructions"
 ```
-(Note: `.cursor/` is gitignored, so `mcp.json` stays local — see Self-Review note.)
 
 - [ ] **Step 5: Push branch**
 
@@ -908,4 +916,4 @@ git push origin harness/superpowers
 
 **3. Type consistency:** `Coord`, `CustomerRow`, `CustomerDistanceDto`, and function signatures are consistent across tasks (distance → reference → customers → repository → app). ✓
 
-**Note (gitignore vs MCP):** `.cursor/` is gitignored, so the Postgres MCP config in Task 9 stays local (not committed). That's acceptable — MCP config is machine-specific. The README documents how to add it. If a committed record is desired, we can instead add a `docs/postgres-mcp.example.json`.
+**Note (MCP for Claude):** The Postgres MCP is consumed by a Claude app, configured via a project-scoped `.mcp.json` at the repo root (Task 9). This is not under `.cursor/`, so it is committed with the repo — no gitignore conflict.
